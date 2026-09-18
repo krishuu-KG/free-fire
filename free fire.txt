@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FF Headshot Panel</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #0b0b0f;
+  color: white;
+}
+
+.panel {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 22px;
+  background: #15151c;
+  border-radius: 18px;
+  box-shadow: 0 0 25px #000;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.card {
+  background: #20202a;
+  padding: 18px;
+  margin-bottom: 18px;
+  border-radius: 14px;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+input {
+  width: 100%;
+  margin: 8px 0 18px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #ff4d00;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.result {
+  margin-top: 15px;
+  padding: 12px;
+  background: #111118;
+  border-radius: 10px;
+  text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="panel">
+
+<h1>🔥 FF Headshot Panel</h1>
+
+<div class="card">
+<h2>🎯 Sensitivity Setup</h2>
+
+<label>General: <span id="gVal">90</span></label>
+<input type="range" min="0" max="200" value="90"
+oninput="gVal.innerText=this.value">
+
+<label>Red Dot: <span id="rVal">85</span></label>
+<input type="range" min="0" max="200" value="85"
+oninput="rVal.innerText=this.value">
+
+<label>2x Scope: <span id="twoVal">80</span></label>
+<input type="range" min="0" max="200" value="80"
+oninput="twoVal.innerText=this.value">
+
+<label>4x Scope: <span id="fourVal">75</span></label>
+<input type="range" min="0" max="200" value="75"
+oninput="fourVal.innerText=this.value">
+
+<button onclick="saveSettings()">Save Settings</button>
+
+<div class="result" id="saved">
+Settings not saved
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>📊 Headshot Tracker</h2>
+
+<div class="stat">
+<span>Total Kills</span>
+<span id="kills">0</span>
+</div>
+
+<div class="stat">
+<span>Headshots</span>
+<span id="hs">0</span>
+</div>
+
+<div class="stat">
+<span>Headshot %</span>
+<span id="percent">0%</span>
+</div>
+
+<button onclick="addKill()">+ Kill</button>
+<br><br>
+<button onclick="addHeadshot()">🎯 + Headshot</button>
+<br><br>
+<button onclick="resetStats()">Reset</button>
+
+</div>
+
+</div>
+
+<script>
+
+let kills = 0;
+let hs = 0;
+
+function addKill() {
+  kills++;
+  update();
+}
+
+function addHeadshot() {
+  hs++;
+  kills++;
+  update();
+}
+
+function update() {
+  document.getElementById("kills").innerText = kills;
+  document.getElementById("hs").innerText = hs;
+
+  let percentage = kills === 0 ? 0 : (hs / kills * 100).toFixed(1);
+
+  document.getElementById("percent").innerText =
+    percentage + "%";
+}
+
+function resetStats() {
+  kills = 0;
+  hs = 0;
+  update();
+}
+
+function saveSettings() {
+  document.getElementById("saved").innerText =
+    "✅ Sensitivity settings saved!";
+}
+
+</script>
+
+</body>
+</html>
